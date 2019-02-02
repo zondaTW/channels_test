@@ -19,9 +19,15 @@ def room(request, room_name):
 
 def api_room(request, room_name):
     room_group_name = f'chat_{room_name}'
-    layer = get_channel_layer()
-    async_to_sync(layer.group_send)(room_group_name, {
-           'type': 'chat_message',
-           'message': f"Hello World: {room_group_name}"
-        })
+    send_message(room_group_name, f"Hello World: {room_group_name}")
     return HttpResponse(f"Hello World: {room_group_name}")
+
+
+def send_message(room_group_name, msg):
+    layer = get_channel_layer()
+    async_to_sync(layer.group_send)(
+        room_group_name,
+        {
+            'type': 'chat_message',
+            'message': msg
+        })
