@@ -13,3 +13,4 @@ Redis: `docker run --name some-redis  -p 6379:6379  -d redis redis-server --appe
 ## Reference
 [Django Channels](https://channels.readthedocs.io/en/latest/)  
 [twtrubiks/django-channels2-tutorial](https://github.com/twtrubiks/django-channels2-tutorial)  
+[跟著 Vue 闖蕩前端世界](https://dotblogs.com.tw/wasichris/2017/03/01/172049)  

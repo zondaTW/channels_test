@@ -1,113 +1,51 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+    <h1>Room: {{roomName}}</h1>
+    <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
+    <input id="chat-message-input" type="text" size="100" v-model="inputContent" /><br/>
+    <input id="chat-message-submit" type="button" value="Send" @click="send_message()" />
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      roomName: '123',
+      hostAdr: '127.0.0.1:8081',
+      chatSocket: null,
+      inputContent: ''
+    }
+  },
+  methods: {
+    send_message: function () {
+      this.chatSocket.send(JSON.stringify({
+        'message': this.inputContent
+      }))
+      console.log('send: ' + this.inputContent)
+      this.inputContent = ''
+    }
+  },
+  mounted: function () {
+    this.chatSocket = new WebSocket(
+      'ws://' + this.hostAdr + '/ws/chat/' + this.roomName + '/')
+    this.chatSocket.onmessage = function (e) {
+      var data = JSON.parse(e.data)
+      var message = data['message']
+      document.querySelector('#chat-log').value += (message + '\n')
+      console.log('message:' + message)
+    }
+    this.chatSocket.onclose = function (e) {
+      console.error('Chat socket closed unexpectedly')
+      console.log('close:')
     }
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
