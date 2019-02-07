@@ -29,9 +29,11 @@
 <script>
 export default {
   name: 'Room',
+  props: {
+    roomName: String
+  },
   data () {
     return {
-      roomName: 'test',
       hostAdr: '127.0.0.1:8081',
       chatSocket: null,
       inputContent: '',
