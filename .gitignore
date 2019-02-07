@@ -2,7 +2,9 @@
 __pycache__
 
 venv*
-.vscode
+
+# django
+db.sqlite3
 
 .DS_Store
 node_modules/
