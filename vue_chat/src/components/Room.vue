@@ -9,8 +9,19 @@
       <textarea id="chatLog" v-model="chatLogContent"></textarea>
     </div>
     <div class="row h-10">
-      <input type="text" v-model="inputContent" class="w-75" v-on:keyup.enter="sendMessage()" v-focus/>
-      <button type="button" class="btn btn-primary w-25" @click="sendMessage()">Send</button>
+      <input
+        ref="inputField"
+        type="text"
+        class="w-75"
+        v-model="inputContent"
+        v-on:keyup.enter="sendMessage()"
+        v-focus
+      />
+      <button
+        type="button"
+        class="btn btn-primary w-25"
+        @click="sendMessage()"
+      >Send</button>
     </div>
   </div>
 </template>
@@ -40,6 +51,7 @@ export default {
       }))
       console.log('send: ' + this.inputContent)
       this.inputContent = ''
+      this.$refs.inputField.focus()
     },
     onMessage: function (e) {
       var data = JSON.parse(e.data)
