@@ -29,15 +29,14 @@
 <script>
 export default {
   name: 'Room',
-  props: {
-    roomName: String
-  },
   data () {
+    let vm = this
     return {
       hostAdr: '127.0.0.1:8081',
       chatSocket: null,
       inputContent: '',
-      chatLogContent: ''
+      chatLogContent: '',
+      roomName: vm.$route.params.roomName
     }
   },
   mounted: function () {

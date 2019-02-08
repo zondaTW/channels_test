@@ -12,11 +12,18 @@
         class="w-75"
         v-focus
         placeholder="Room name"
+        v-model="inputContent"
       />
-      <button
-        type="button"
+      <router-link
+        :to="{
+          name: 'Room',
+          params: {
+            roomName: inputContent
+          }
+        }"
+        tag="button"
         class="btn btn-primary w-25"
-      >Join</button>
+      >Join</router-link>
     </div>
   </div>
 </template>
@@ -26,11 +33,8 @@ export default {
   name: 'Home',
   data () {
     return {
+      inputContent: ''
     }
-  },
-  mounted: function () {
-  },
-  methods: {
   },
   directives: {
     focus: {
