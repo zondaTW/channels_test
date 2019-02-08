@@ -13,6 +13,7 @@
         v-focus
         placeholder="Room name"
         v-model="inputContent"
+        v-on:keyup.enter="triggerRoomRouter()"
       />
       <router-link
         :to="{
@@ -39,6 +40,14 @@ export default {
     }
   },
   methods: {
+    triggerRoomRouter: function () {
+      this.$router.replace({
+        name: 'Room',
+        params: {
+          roomName: this.inputContent
+        }
+      })
+    }
   },
   directives: {
     focus: {
