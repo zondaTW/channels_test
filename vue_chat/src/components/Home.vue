@@ -23,6 +23,8 @@
         }"
         tag="button"
         class="btn btn-primary w-25"
+        :class="{disabled: inputContent.length === 0}"
+        :disabled="inputContent.length === 0"
       >Join</router-link>
     </div>
   </div>
@@ -35,6 +37,8 @@ export default {
     return {
       inputContent: ''
     }
+  },
+  methods: {
   },
   directives: {
     focus: {
