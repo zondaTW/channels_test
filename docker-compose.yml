@@ -1,0 +1,19 @@
+version: '3'
+services:
+    redis:
+        container_name: redis
+        image: redis
+        restart: always
+        command: ["redis-server", "--appendonly", "yes"]
+        ports:
+            - "6379:6379"
+    backend:
+        build: .
+        command: bash -c "python manage.py runserver 0.0.0.0:8081"
+        restart: always
+        ports:
+            - "8081:8081"
+        volumes:
+            - .:/channels_test
+        depends_on:
+            - redis
