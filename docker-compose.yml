@@ -17,3 +17,10 @@ services:
             - .:/channels_test
         depends_on:
             - redis
+    frontend:
+        build: vue_chat
+        command: bash -c "http-server dist"
+        restart: always
+        ports:
+            - "8083:8083"
+
